@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- <script>
     <div id="canvas"></div>
-    <script>
-        canvas.onclick = (e)=>{
+        canvas.onmousemove = (e)=>{
                 //console.log(e)是调试方法
                 console.log(e.clientX)
                 console.log(e.clientY)
@@ -27,6 +27,42 @@
 
                 canvas.appendChild(div)
         }
-    </script>
+    </script> -->
+    <!--以上代码不适合使用，性能较差，以体现canvas的重要-->
+    
+    <canvas id="canvas"></canvas>
+    <script>
+        //画线
+        let canvas = document.getElementById("canvas");
+        canvas.width = document.documentElement.clientWidth//获取屏幕宽度
+        canvas.height = document.documentElement.clientWidth//获取屏幕高度
+        let ctx = canvas.getContext("2d");
+        //ctx.fillRect (10, 10, 55, 50);//括号内四个值分别对应起始横坐标、纵坐标、宽、高
+        
+        let painting = false
+        
+        ctx.fillStyle = 'black';
+        ctx.strokeStyle = 'none'//去边
+
+        canvas.onmousedown = () => {
+            painting = true
+        }
+
+        canvas.onmousemove = (e) =>{
+            if (painting === true) {
+                ctx.fillRect(e.clientX-5,e.clientY-5,10,10);
+                ctx.beginPath();
+                ctx.arc(e.clientX,e.clientY,10,0,2*Math.PI);
+                ctx.stroke();
+                ctx.fill();
+            }
+            else{
+                console.log('什么都不做')
+            }
+        }
+        canvas.onmouseup = () => {
+            painting = false
+        }
+   </script>
 </body>
 </html>
